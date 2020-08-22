@@ -1,0 +1,25 @@
+target/
+src/main/resources/data/
+src/main/resources/HanLP.properties
+src/main/resources/application.properties
+src/main/java/com/ecm/keyword/manager/WordFilter.java
+src/main/resources/static
+!.mvn/wrapper/maven-wrapper.jar
+
+
+### STS ###
+.apt_generated
+.classpath
+
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+*/.DS_Store

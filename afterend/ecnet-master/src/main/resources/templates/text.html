@@ -1,0 +1,298 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>上传证据 | 法官工作空间</title>
+
+
+    <link rel="stylesheet" th:href="@{css/bootstrap.css}"/>
+    <link rel="stylesheet" th:href="@{css/font-awesome.css}"/>
+    <link rel="stylesheet" th:href="@{css/style.css}"/>
+    <link rel="stylesheet" th:href="@{css/custom.css}"/>
+    <link rel="apple-touch-icon-precomposed" th:href="@{img/icon.png}">
+    <link rel="shortcut icon" th:href="@{img/favicon.ico}">
+    <script th:src="@{js/ref/jquery-2.1.4.min.js}"></script>
+    <script th:src="@{js/ref/jquerysession.js}"></script>
+    <script th:src="@{js/ref/bootstrap.js}"></script>
+    <script th:src="@{js/text.js}"></script>
+
+    <![endif]-->
+    <!--[if lt IE 9]>
+    <script>window.location.href='upgrade-browser.html';</script>
+    <![endif]-->
+
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        if($.session.get('username')==null){
+            window.location.href="/ecm/login";
+        }else if($.session.get('cid')==null){
+            window.location.href="/ecm/manage";
+        }
+        /*]]>*/
+    </script>
+
+    <style>
+        body{ background:#ffffff}
+    </style>
+</head>
+
+<body class="user-select">
+<section class="container-fluid">
+    <div class="row">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                    <a class="navbar-brand" href="/ecm/upload">证据链关系图建模工具</a> </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="menu-label"><a id="userLabel" title="查看或修改个人信息" data-toggle="modal" data-target="#seeUserInfo">个人信息</a></li>
+                        <li><a id='exist_click'>退出登录</a></li>
+                    </ul>
+                    <!--<form action="" method="post" class="navbar-form navbar-right" role="search">-->
+                        <!--<div class="input-group">-->
+                            <!--<input type="text" class="form-control" autocomplete="off" placeholder="键入关键字搜索" maxlength="15">-->
+                            <!--<span class="input-group-btn">-->
+                            <!--<button class="btn btn-default" type="submit">搜索</button>-->
+                            <!--</span> </div>-->
+                    <!--</form>-->
+                </div>
+            </div>
+            <ol class="breadcrumb" style="font-size: 19px">
+                <li>
+                    <a href="/ecm/upload">质证与采信</a>
+                </li>
+                <li>
+                    <a href="/ecm/model">证据链建模</a>
+                </li>
+                <li>
+                <a class="active" href="/ecm/logic-new">说理逻辑</a>
+                </li>
+                <li>    <strong>
+                    <a href="/ecm/text">说理语段</a></strong>
+                </li>
+
+                <li style="float: right;">
+                    <a href="/ecm/manage">返回法官工作空间</a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+
+    <div class="row" style="padding-top: 7% ;padding-left: 2%;padding-right: 3%">
+
+
+
+
+    </div>
+
+<br>
+    <div class="col-md-11">
+
+
+    <div class="btn-toolbar operation pull-right row" role="toolbar">
+        <!--<div class="btn-group" role="group">-->
+        <!--<a class="btn btn-default" onClick="mySplit()">分解证据</a>-->
+        <!--<a class="btn btn-default" onClick="myHead()">提取链头</a>-->
+        <!--</div>-->
+        <div class="btn-group" role="group" >
+            <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="edit()">编辑</button>
+            <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="update()">保存</button>
+            <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="downloadWord()">导出word</button>
+            <button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="downloadPDF()">导出pdf</button>
+
+        </div>
+    </div>
+    </div>
+    <div class="row" style="padding-left:2% ">
+        <div class="col-md-11">
+            <h2 class="text-center" style="color:black">事实段</h2>
+            <br>
+            <div class="text-left m-t-md">
+
+                <!--<textarea id="mystr" class="form-control" rows="5"></textarea>-->
+                <p style="color: black" class="pull-left"  id="factPara">
+
+                </p>
+                <br>
+                <!--<button  class="col-md-2 btn-success btn-sm btn pull-right" onclick="myHead()">提取链头</button>-->
+
+                <!--<button  class="col-md-2 btn-success btn-sm btn pull-right" onclick="mySplit()" >分解证据</button> <span></span>-->
+
+                <div class="btn-toolbar operation pull-right" role="toolbar">
+                    <!--<div class="btn-group" role="group">-->
+                    <!--<a class="btn btn-default" onClick="mySplit()">分解证据</a>-->
+                    <!--<a class="btn btn-default" onClick="myHead()">提取链头</a>-->
+                    <!--</div>-->
+                    <div class="btn-group" role="group">
+                        <!--<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="editFactText()">编辑</button>-->
+                        <!--<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="myDelete()">导出</button>-->
+
+                    </div>
+                </div>
+
+                <div id="after">
+
+
+                    <br>
+
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="row" style="padding-left:2% ">
+        <div class="col-md-11">
+            <h2 class="text-center" style="color:black">证据段</h2>
+            <br>
+            <div class="text-left m-t-md">
+
+                <!--<textarea id="mystr" class="form-control" rows="5"></textarea>-->
+                <p style="color: black" class="pull-left" id="evidencePara">
+                    上述事实，有公诉机关及被告人提供，并经法庭质证、认证的下列证据予以证明：
+                    人罗某甲、胡某甲辨认属实。
+                </p>
+                <br>
+                <!--<button  class="col-md-2 btn-success btn-sm btn pull-right" onclick="myHead()">提取链头</button>-->
+
+                <!--<button  class="col-md-2 btn-success btn-sm btn pull-right" onclick="mySplit()" >分解证据</button> <span></span>-->
+
+                <div class="btn-toolbar operation pull-right" role="toolbar">
+                    <!--<div class="btn-group" role="group">-->
+                    <!--<a class="btn btn-default" onClick="mySplit()">分解证据</a>-->
+                    <!--<a class="btn btn-default" onClick="myHead()">提取链头</a>-->
+                    <!--</div>-->
+                    <div class="btn-group" role="group">
+                        <!--<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="myDelete()">编辑</button>-->
+                        <!--<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="myDelete()">导出</button>-->
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="row" style="padding-left:2% ">
+        <div class="col-md-11">
+            <h2 class="text-center" style="color:black">裁判文书</h2>
+            <br>
+            <div class="text-left m-t-md">
+
+                <!--<textarea id="mystr" class="form-control" rows="5"></textarea>-->
+                <p style="color: black" class="pull-left"  id="resultPara">
+
+                </p>
+                <br>
+                <!--<button  class="col-md-2 btn-success btn-sm btn pull-right" onclick="myHead()">提取链头</button>-->
+
+                <!--<button  class="col-md-2 btn-success btn-sm btn pull-right" onclick="mySplit()" >分解证据</button> <span></span>-->
+
+                <div class="btn-toolbar operation pull-right" role="toolbar">
+                    <!--<div class="btn-group" role="group">-->
+                    <!--<a class="btn btn-default" onClick="mySplit()">分解证据</a>-->
+                    <!--<a class="btn btn-default" onClick="myHead()">提取链头</a>-->
+                    <!--</div>-->
+                    <div class="btn-group" role="group">
+                        <!--<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="myDelete()">编辑</button>-->
+                        <!--<button type="submit" class="btn btn-default" data-toggle="tooltip" data-placement="bottom" title="" name="checkbox_delete" onclick="myDelete()">导出</button>-->
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+<!--个人信息模态框-->
+<!--<div class="modal fade" id="seeUserInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">-->
+    <!--<div class="modal-dialog" role="document">-->
+        <!--<form action="" method="post">-->
+            <!--<div class="modal-content">-->
+                <!--<div class="modal-header">-->
+                    <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                    <!--<h4 class="modal-title" >个人信息</h4>-->
+                <!--</div>-->
+                <!--<div class="modal-body">-->
+                    <!--<table class="table" style="margin-bottom:0px;">-->
+                        <!--<thead>-->
+                        <!--<tr> </tr>-->
+                        <!--</thead>-->
+                        <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<td wdith="20%">姓名:</td>-->
+                            <!--<td width="80%"><input type="text" value="王雨" class="form-control" name="truename" maxlength="10" autocomplete="off" /></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td wdith="20%">用户名:</td>-->
+                            <!--<td width="80%"><input type="text" value="admin" class="form-control" name="username" maxlength="10" autocomplete="off" /></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td wdith="20%">电话:</td>-->
+                            <!--<td width="80%"><input type="text" value="18538078281" class="form-control" name="usertel" maxlength="13" autocomplete="off" /></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td wdith="20%">旧密码:</td>-->
+                            <!--<td width="80%"><input type="password" class="form-control" name="old_password" maxlength="18" autocomplete="off" /></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td wdith="20%">新密码:</td>-->
+                            <!--<td width="80%"><input type="password" class="form-control" name="password" maxlength="18" autocomplete="off" /></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<td wdith="20%">确认密码:</td>-->
+                            <!--<td width="80%"><input type="password" class="form-control" name="new_password" maxlength="18" autocomplete="off" /></td>-->
+                        <!--</tr>-->
+                        <!--</tbody>-->
+                        <!--<tfoot>-->
+                        <!--<tr></tr>-->
+                        <!--</tfoot>-->
+                    <!--</table>-->
+                <!--</div>-->
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>-->
+                    <!--<button type="submit" class="btn btn-primary">提交</button>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</form>-->
+    <!--</div>-->
+<!--</div>-->
+
+<!--提示模态框-->
+<div class="modal fade user-select" id="areDeveloping" tabindex="-1" role="dialog" aria-labelledby="areDevelopingModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
+            </div>
+            <div class="modal-body"> <img src="public/img/baoman/baoman_01.gif" alt="深思熟虑" />
+                <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">朕已阅</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
